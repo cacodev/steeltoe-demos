@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Steeltoe.Management.Endpoint.Health;
 using Steeltoe.Management.Endpoint.HeapDump;
 using Steeltoe.Management.Endpoint.Info;
 using Steeltoe.Management.Endpoint.Info.Contributor;
@@ -23,10 +25,15 @@ namespace mgmt_app
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IZachsAwesomeServiceThatNeverFails, ZachsAwesomeServiceThatNeverFails>();
+
+            services.AddScoped<IHealthContributor, AppHealthContributor>();
+            
             services.AddSingleton<IInfoContributor, AppSettingsInfoContributor>();
             services.AddSingleton<IInfoContributor, GitInfoContributor>();
 
             // Add managment endpoint services
+            services.AddHealthActuator(Configuration);
             services.AddInfoActuator(Configuration);
             services.AddTraceActuator(Configuration);
             services.AddLoggersActuator(Configuration);
@@ -43,6 +50,7 @@ namespace mgmt_app
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseHealthActuator();
             app.UseInfoActuator();
             app.UseTraceActuator();
             app.UseLoggersActuator();
