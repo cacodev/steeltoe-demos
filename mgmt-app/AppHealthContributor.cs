@@ -7,12 +7,10 @@ namespace mgmt_app
 {
     public class AppHealthContributor:IHealthContributor
     {
-        private readonly ILogger<AppHealthContributor> _logger;
         private readonly IZachsAwesomeServiceThatNeverFails _aweseomeService;
 
-        public AppHealthContributor(ILogger<AppHealthContributor> logger, IZachsAwesomeServiceThatNeverFails awesomeService)
+        public AppHealthContributor(IZachsAwesomeServiceThatNeverFails awesomeService)
         {
-            _logger = logger;
             _aweseomeService = awesomeService;
         }
 
