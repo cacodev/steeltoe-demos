@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Steeltoe.Management.Endpoint.HeapDump;
+using Steeltoe.Management.Endpoint.Info;
+using Steeltoe.Management.Endpoint.Info.Contributor;
+using Steeltoe.Management.Endpoint.Loggers;
+using Steeltoe.Management.Endpoint.ThreadDump;
+using Steeltoe.Management.Endpoint.Trace;
 
 namespace mgmt_app
 {
@@ -23,6 +23,16 @@ namespace mgmt_app
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IInfoContributor, AppSettingsInfoContributor>();
+            services.AddSingleton<IInfoContributor, GitInfoContributor>();
+
+            // Add managment endpoint services
+            services.AddInfoActuator(Configuration);
+            services.AddTraceActuator(Configuration);
+            services.AddLoggersActuator(Configuration);
+            services.AddHeapDumpActuator(Configuration);
+            services.AddThreadDumpActuator(Configuration);
+
             services.AddMvc();
         }
 
@@ -33,6 +43,11 @@ namespace mgmt_app
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseInfoActuator();
+            app.UseTraceActuator();
+            app.UseLoggersActuator();
+            app.UseHeapDumpActuator();
+            app.UseThreadDumpActuator();
 
             app.UseMvc();
         }
