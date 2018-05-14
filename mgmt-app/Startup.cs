@@ -25,11 +25,13 @@ namespace mgmt_app
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add zach's awesome service that really really shouldn't fail, promise
             services.AddSingleton<IZachsAwesomeServiceThatNeverFails, ZachsAwesomeServiceThatNeverFails>();
-
+            
+            // Add custom health contributor
             services.AddScoped<IHealthContributor, AppHealthContributor>();
             
-            services.AddSingleton<IInfoContributor, AppSettingsInfoContributor>();
+            // Add info contributor to show gitinfo
             services.AddSingleton<IInfoContributor, GitInfoContributor>();
 
             // Add managment endpoint services
@@ -50,6 +52,8 @@ namespace mgmt_app
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            // use the management endpoint actuators
             app.UseHealthActuator();
             app.UseInfoActuator();
             app.UseTraceActuator();
