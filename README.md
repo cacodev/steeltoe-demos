@@ -1,3 +1,3 @@
-# Beans n' Meme's - Custom Coffee Roasters - Steeltoe Sample App
+# Steeltoe Demos
 
-This repo contains a sample app that uses steeltoe components with dotnet core apps for a sample
+This repo contains several sample/demo apps that demonstrate usage of the components in the steeltoe toolbox
