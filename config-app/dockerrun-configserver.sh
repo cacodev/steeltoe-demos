@@ -1,0 +1,2 @@
+#!/bin/bash
+docker run -it --rm -p 8888:8888 -v /Users/dks0381518/steeltoe-demos/config-app/config/:/config steeltoeoss/configserver --spring.profiles.active=native --spring.cloud.config.server.native.searchLocations=/config
