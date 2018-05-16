@@ -20,7 +20,7 @@ namespace service1_app
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls("http://localhost:5001")
+                .UseUrls("http://localhost:5001", $"http://{System.Environment.MachineName}:5001")
                 .Build();
     }
 }

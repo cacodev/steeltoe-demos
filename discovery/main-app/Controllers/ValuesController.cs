@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using main_app.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace main_app.Controllers
@@ -9,36 +10,38 @@ namespace main_app.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private readonly IService1 _svc1;
+        private readonly IService2 _svc2;
+        public ValuesController(IService1 service1, IService2 service2)
+        {
+            _svc1 = service1;
+            _svc2 = service2;
+        }
+
+
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var result1 = await _svc1.GetValuesFrom1();
+            var result2 = await _svc2.GetValuesFrom2();
+            return result1.Union(result2);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<List<string>> Get(int id)
         {
-            return "value";
-        }
+            if(id == 1)
+            {
+                return await _svc1.GetValuesFrom1();
+            }
+            else if (id == 2)
+            {
+                return await _svc2.GetValuesFrom2();
+            }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return new List<string>();
         }
     }
 }

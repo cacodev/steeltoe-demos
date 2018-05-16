@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Steeltoe.Discovery.Client;
+using main_app.Services;
 
 namespace main_app
 {
@@ -24,6 +25,9 @@ namespace main_app
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IService1, Service1>();
+            services.AddSingleton<IService2, Service2>();
+            
             services.AddDiscoveryClient(Configuration);
 
             services.AddMvc();
