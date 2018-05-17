@@ -1,4 +1,4 @@
-﻿namespace mgmt_app
+﻿namespace mgmt_app.Services
 {
     public interface IZachsAwesomeServiceThatNeverFails
     {

@@ -10,6 +10,7 @@ using Steeltoe.Management.Endpoint.Info.Contributor;
 using Steeltoe.Management.Endpoint.Loggers;
 using Steeltoe.Management.Endpoint.ThreadDump;
 using Steeltoe.Management.Endpoint.Trace;
+using mgmt_app.Services;
 
 namespace mgmt_app
 {

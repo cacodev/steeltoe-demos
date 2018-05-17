@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace mgmt_app
+namespace mgmt_app.Services
 {
     public class ZachsAwesomeServiceThatNeverFails : IZachsAwesomeServiceThatNeverFails
     {

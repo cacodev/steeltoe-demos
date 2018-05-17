@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Steeltoe.Management.Endpoint.Health;
 
-namespace mgmt_app
+namespace mgmt_app.Services
 {
     public class AppHealthContributor:IHealthContributor
     {
